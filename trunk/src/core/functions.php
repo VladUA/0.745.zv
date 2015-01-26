@@ -912,13 +912,16 @@ function db_get_schema($schema_file, $tfolder="", $tview="", $cache=true, $popup
   //db-fail select custom_schema from simple_sys_tree where id='cifs:17501/xbase/net/olga/' limit 1 offset 0
   //ERROR:  invalid input syntax for type numeric: "cifs:17501/xbase/net/olga/"LINE 1: ...elect custom_schema from simple_sys_tree where id='cifs:1750...
 
-  if( is_numeric( $tfolder ) ) $folder = $tfolder;
-  else
+  $folder = "";
+  if( !empty( $tfolder ) )
    {
-    preg_match("/[\d]+/", $tfolder, $tafolder );
-    if( is_array( $tafolder ) ) $folder = $tafolder[0];
-    else if( is_number( $tafolder ) ) $folder = $tafolder;
-    else $folder = "";
+    if( is_numeric( $tfolder ) ) $folder = $tfolder;
+    else
+     {
+      preg_match("/[\d]+/", $tfolder, $tafolder );
+      if( is_array( $tafolder ) ) $folder = $tafolder[0];
+      else if( is_number( $tafolder ) ) $folder = $tafolder;
+     }
    }
   //
 
